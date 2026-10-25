@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Финал Банкротства // Свобода в цифрах 2.1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #0B0D14;
+            --bg-surface: #121522;
+            --bg-card: #181C2E;
+            --bg-card-hover: #1F243B;
+            --border: #262C46;
+            --border-focus: #434C75;
+            
+            --text-main: #F3F4F8;
+            --text-muted: #8F97B5;
+            --text-dim: #555D80;
+            
+            --accent-purple: #8B5CF6;
+            --accent-purple-glow: rgba(139, 92, 246, 0.35);
+            --accent-green: #10B981;
+            --accent-green-glow: rgba(16, 185, 129, 0.25);
+            --accent-amber: #F59E0B;
+            --accent-blue: #3B82F6;
+            --accent-rose: #F43F5E;
+            
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 16px;
+            line-height: 1.5;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Top Nav */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .brand-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .nav-chips {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .chip.active-work {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--accent-green);
+        }
+
+        /* Hero Progress Card */
+        .hero-card {
+            background: radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+                        var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            position: relative;
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .hero-subtitle {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-purple);
+            margin-bottom: 4px;
+        }
+
+        .hero-title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-digits-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .hero-digits {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            color: #FFFFFF;
+            text-shadow: 0 2px 20px var(--accent-purple-glow);
+        }
+
+        .hero-digits-cur {
+            font-size: 32px;
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
+        .hero-goal-badge {
+            font-size: 13px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Multi-Milestone Bar */
+        .bar-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .progress-track {
+            height: 18px;
+            background: #0D101C;
+            border-radius: 999px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366F1, #8B5CF6 70%, #A855F7);
+            border-radius: 999px;
+            box-shadow: 0 0 15px var(--accent-purple-glow);
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bar-milestones {
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 18px;
+            pointer-events: none;
+        }
+
+        .milestone-pin {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateX(-50%);
+        }
+
+        .milestone-pin::after {
+            content: attr(data-label);
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        .milestone-pin.reached {
+            background: var(--accent-green);
+        }
+        .milestone-pin.reached::after {
+            color: var(--accent-green);
+        }
+
+        /* 3-Tier Grid */
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .tier-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            transition: all 0.2s;
+        }
+
+        .tier-card.active {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, var(--bg-card) 100%);
+        }
+
+        .tier-card.completed {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, var(--bg-card) 100%);
+        }
+
+        .tier-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+        }
+
+        .tier-card.active .tier-head { color: var(--accent-purple); }
+        .tier-card.completed .tier-head { color: var(--accent-green); }
+
+        .tier-val {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .tier-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .info-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Tactical Quest */
+        .quest-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .quest-target-num {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-amber);
+        }
+
+        .quest-bar-bg {
+            height: 8px;
+            background: #0E111C;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .quest-bar-fill {
+            height: 100%;
+            background: var(--accent-amber);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        /* Patreon Focus Card */
+        .patreon-card {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.08) 0%, var(--bg-card) 100%);
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .patreon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .patreon-badge {
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(244, 63, 94, 0.2);
+            color: var(--accent-rose);
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Feed List */
+        .feed-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .feed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .feed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .feed-desc {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .feed-date {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .feed-sum {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        /* Expenses Section & Real-time Impact */
+        .expense-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .exp-impact-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-impact-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .exp-col-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .exp-item.paid {
+            opacity: 0.4;
+            background: #0E111C;
+            border-color: transparent;
+        }
+
+        .exp-item.paid span.exp-name {
+            text-decoration: line-through;
+        }
+
+        .exp-checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 1px solid var(--border-focus);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            margin-right: 10px;
+        }
+
+        .exp-item.paid .exp-checkbox {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: #000;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent-purple);
+            color: #FFFFFF;
+            box-shadow: 0 0 15px var(--accent-purple-glow);
+        }
+
+        .btn-outline {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 16px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .form-control {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            font-size: 15px;
+            color: var(--text-main);
+            outline: none;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .tier-grid, .stats-grid, .exp-grid { grid-template-columns: 1fr; }
+            .hero-digits { font-size: 44px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Nav -->
+    <div class="top-nav">
+        <div class="brand">
+            <span class="brand-dot"></span>
+            Финал Банкротства // 2026
+        </div>
+        <div class="nav-chips">
+            <div class="chip active-work">👷‍♂️ Паша: пешая доступность</div>
+            <div class="chip">🏁 Финиш: <span class="mono">01.12</span></div>
+        </div>
+    </div>
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+        <div class="hero-header">
+            <div>
+                <div class="hero-subtitle">Боевой бюджет // Уровень 01</div>
+                <div class="hero-title">Свобода в цифрах</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()">+ Доход</button>
+        </div>
+
+        <div class="hero-digits-wrap">
+            <span class="hero-digits mono" id="hero-total-sum">80 400</span>
+            <span class="hero-digits-cur">₽</span>
+            <span class="hero-goal-badge">Цель: <b>150 000 ₽</b></span>
+        </div>
+
+        <div class="bar-container">
+            <div class="bar-labels">
+                <span id="next-goal-text">До минимума (120к): 39 600 ₽</span>
+                <span class="mono" id="main-percent-text">53.6%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="main-progress-bar" style="width: 53.6%;"></div>
+                <div class="bar-milestones">
+                    <div class="milestone-pin" style="left: 80%;" data-label="120k"></div>
+                    <div class="milestone-pin" style="left: 86.6%;" data-label="130k"></div>
+                    <div class="milestone-pin" style="left: 100%;" data-label="150k"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tier-grid">
+            <div class="tier-card active" id="card-tier-1">
+                <div class="tier-head">
+                    <span>01 / Минимум</span>
+                    <span id="tier-badge-1">В процессе</span>
+                </div>
+                <div class="tier-val mono">120 000 ₽</div>
+                <div class="tier-sub" id="tier-sub-1">Осталось 39 600 ₽</div>
+            </div>
+            <div class="tier-card" id="card-tier-2">
+                <div class="tier-head">
+                    <span>02 / Комфорт</span>
+                    <span>Впереди</span>
+                </div>
+                <div class="tier-val mono">130 000 ₽</div>
+                <div class="tier-sub" id="tier-sub-2">Осталось 49 600 ₽</div>
+            </div>
+            <div class="tier-card" id="card-tier-3">
+                <div class="tier-head">
+                    <span>03 / Финал</span>
+                    <span>Впереди</span>
+                </div>
+                <div class="tier-val mono">150 000 ₽</div>
+                <div class="tier-sub" id="tier-sub-3">Осталось 69 600 ₽</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Row: Quests & Patreon -->
+    <div class="stats-grid">
+        <!-- Tactical Quest -->
+        <div class="info-card">
+            <div>
+                <div class="card-header-line">
+                    <div class="card-title">🎯 Тактический квест: Ноябрь</div>
+                    <span class="chip mono" style="color:var(--accent-amber);">Срок 03-13.11</span>
+                </div>
+                
+                <div class="quest-box">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                        <span style="font-size: 13px; font-weight: 600;">Броня: Хата (20к) + Адвокат (10к)</span>
+                        <span class="quest-target-num mono" id="quest-collected-text">0 / 30к</span>
+                    </div>
+                    <div class="quest-bar-bg">
+                        <div class="quest-bar-fill" id="quest-bar-fill" style="width: 0%;"></div>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted); display:flex; justify-content:space-between;">
+                        <span>Отложено в сейф: <b id="quest-saved-display" style="color:#FFF;">0 ₽</b></span>
+                        <a href="javascript:void(0)" onclick="editQuestSaved()" style="color:var(--accent-purple); font-weight:700; text-decoration:none;">[Изменить]</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.4;">
+                * Задача закрыть эти 30к до ДР Димона (03.11) и спокойно работать дальше до заморозков.
+            </div>
+        </div>
+
+        <!-- Patreon & 3D Radar -->
+        <div class="info-card">
+            <div>
+                <div class="card-header-line">
+                    <div class="card-title">🎨 Patreon & 3D Проект</div>
+                    <span class="patreon-badge">Цель: $100</span>
+                </div>
+
+                <div class="patreon-card">
+                    <div class="patreon-header">
+                        <span class="mono" style="font-size: 26px; font-weight: 800; color: #FFF;">$92.00</span>
+                        <span style="font-size: 12px; color: var(--accent-rose); font-weight: 700;">Осталось $8</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">
+                        ⚠️ <b>0 активных платных сабов</b> (отписка из-за паузы 2 месяца).
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
+                        План на 26 окт: <b>1 сет из 100+ архива + пост возвращения + 1 пост в X/Reddit</b>.
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                <span style="font-size:11px; color:var(--text-dim);">100+ готовых артов в пайплайне</span>
+                <button class="btn btn-outline" style="font-size:11px; padding:6px 10px;" onclick="copyPatreonChecklist()">📋 План на сегодня</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expenses Checklist with Dynamic Calculation -->
+    <div class="expense-card">
+        <div class="card-header-line">
+            <div class="card-title">🛡️ Обязательства и расходы (Влияют на баланс)</div>
+            <span style="font-size: 11px; color: var(--text-dim);">Кликай пункт, чтобы отметить оплату</span>
+        </div>
+
+        <!-- Dynamic Impact Banner -->
+        <div class="exp-impact-banner">
+            <div class="exp-impact-stats">
+                <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);">Закрыто счетов из сметы:</span>
+                <span class="mono" style="font-size: 18px; font-weight: 800; color: var(--accent-green);" id="exp-paid-sum">35 000 ₽</span>
+            </div>
+            <div class="progress-track" style="height: 10px;">
+                <div class="progress-fill" id="exp-paid-bar" style="background: var(--accent-green); width: 40%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                <span>Всего в смете: <b class="mono" id="exp-total-estimate">78 600 ₽</b></span>
+                <span>Осталось оплатить: <b class="mono" style="color:var(--accent-amber);" id="exp-remain-to-pay">43 600 ₽</b></span>
+            </div>
+        </div>
+
+        <div class="exp-grid">
+            <div>
+                <div class="exp-col-title">Регулярные счета</div>
+                <div class="exp-list" id="exp-recurring"></div>
+            </div>
+            <div>
+                <div class="exp-col-title">Разовые покупки и вещи</div>
+                <div class="exp-list" id="exp-onetime"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feed Card -->
+    <div class="feed-card">
+        <div class="feed-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <div>
+                <div class="card-title">📜 Журнал выходов</div>
+                <div style="font-size: 11px; color: var(--text-dim);" id="feed-count-text">17 записей</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn btn-outline" style="font-size:11px;" onclick="generateSyncCode()">📲 Код синхронизации</button>
+                <button class="btn btn-outline" style="font-size:11px;" onclick="importSyncCode()">📥 Вставить код</button>
+            </div>
+        </div>
+
+        <div class="feed-list" id="feed-container"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="add-modal">
+    <div class="modal-box">
+        <h3 style="font-size: 18px; font-weight: 800;">Добавить доход в кассу</h3>
+        <input type="number" id="in-sum" class="form-control mono" placeholder="Сумма в рублях (напр. 7000)">
+        <input type="text" id="in-date" class="form-control" placeholder="Дата (напр. 27 окт.)">
+        <textarea id="in-desc" class="form-control" rows="2" placeholder="Описание смены..."></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="btn btn-outline" onclick="closeAddModal()">Отмена</button>
+            <button class="btn btn-primary" onclick="saveNewEntry()">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const INITIAL_RECORDS = [
+        { id: 17, date: "24 окт.", sum: 13000, desc: "За 23.10 и 24.10. По сути я выкопал почти сам 2 кольца по 1,5м" },
+        { id: 16, date: "22 окт.", sum: 9000, desc: "Тяжелый день с Пашей. 15 часов работали, понТно много сборов и мелочей, но оч долго" },
+        { id: 15, date: "19 окт.", sum: 8000, desc: "4,5 кольца колодца с Пашей. Я на ведрах. Ушел ВЕСЬ ДЕНЬ. Проснулся в 7, приехал в 1 ночи" },
+        { id: 14, date: "17 окт.", sum: 7000, desc: "С Димоном 2 кольца по 1,5. Почти все сами сделали, кроме труб" },
+        { id: 13, date: "16 окт.", sum: 8000, desc: "Тяжелый день с Пашей. Считай 12-ти часовой без дороги. Но я считаю норм" },
+        { id: 12, date: "15 окт.", sum: 5000, desc: "С Пашей труба + разметка колец и почти кольцо 2м" },
+        { id: 11, date: "15 окт.", sum: 5000, desc: "За вовкины поездки 5 и 9 октября" },
+        { id: 10, date: "14 окт.", sum: 1400, desc: "мама дала 2к 'на бензин', 600Р я потратил на такси до Армейского" },
+        { id: 9,  date: "13 окт.", sum: 4000, desc: "1 выезд с Пашей. Буксировали машину, ели шаурму и копали кольцо" },
+        { id: 8,  date: "11 окт.", sum: 2400, desc: "примерно осталось от д. Витиных 6к (округлил)" },
+        { id: 7,  date: "11 окт.", sum: 4000, desc: "2 кольца колодец. Подработка с Димоном от д. Коли" },
+        { id: 6,  date: "10 окт.", sum: 400,  desc: "кэшбек за 09, 393 округлил" },
+        { id: 5,  date: "8 окт.",  sum: 7000, desc: "Первый колодец. Два кольца вдвоем" },
+        { id: 4,  date: "7 окт.",  sum: 1000, desc: "считаем как условный доход от д. Вити" },
+        { id: 3,  date: "2 окт.",  sum: 2200, desc: "Заявка на двоих 550/2. Я пришел один, чел сказал заплатят как за 4ч" },
+        { id: 2,  date: "29 сент.", sum: 2000, desc: "Заявка на 4 часа." },
+        { id: 1,  date: "26 сент.", sum: 1000, desc: "Первая шабашка. 2 часа" }
+    ];
+
+    // Added numeric rubVal so ticking checkboxes recalculates pending expenses
+    const INITIAL_EXPENSES = [
+        { id: "e1", cat: "rec", name: "Аренда (Октябрь)", sumText: "20 000 ₽", rubVal: 20000, paid: true },
+        { id: "e2", cat: "rec", name: "Адвокат (Октябрь)", sumText: "10 000 ₽", rubVal: 10000, paid: true },
+        { id: "e3", cat: "rec", name: "Аренда (Ноябрь, к 13.11)", sumText: "20 000 ₽", rubVal: 20000, paid: false },
+        { id: "e4", cat: "rec", name: "Адвокат (Ноябрь, к 16.11)", sumText: "10 000 ₽", rubVal: 10000, paid: false },
+        { id: "e5", cat: "rec", name: "Интернет (Октябрь/Ноябрь)", sumText: "850 ₽", rubVal: 850, paid: false },
+        { id: "e6", cat: "rec", name: "МТС (резерв связи)", sumText: "600 ₽", rubVal: 600, paid: false },
+        { id: "e7", cat: "rec", name: "iCloud 2 ТБ (5 000 ₸)", sumText: "≈1 100 ₽", rubVal: 1100, paid: false },
+        { id: "e8", cat: "rec", name: "VPN сервер ($3.51)", sumText: "≈350 ₽", rubVal: 350, paid: false },
+        { id: "e9", cat: "rec", name: "Spotify Family ($8)", sumText: "≈800 ₽", rubVal: 800, paid: false },
+        
+        { id: "o1", cat: "one", name: "Подарок маме (колонка)", sumText: "3 000 ₽", rubVal: 3000, paid: true },
+        { id: "o2", cat: "one", name: "Бензин (Октябрь)", sumText: "2 000 ₽", rubVal: 2000, paid: true },
+        { id: "o3", cat: "one", name: "Тёплая куртка / ветровка", sumText: "5 000 ₽", rubVal: 5000, paid: false },
+        { id: "o4", cat: "one", name: "Носки и бельё", sumText: "2 000 ₽", rubVal: 2000, paid: false },
+        { id: "o5", cat: "one", name: "Анализы (сахар/мочевая)", sumText: "500 ₽", rubVal: 500, paid: false },
+        { id: "o6", cat: "one", name: "Kaspi Gold (1 995 ₸)", sumText: "≈450 ₽", rubVal: 450, paid: false }
+    ];
+
+    let records = JSON.parse(localStorage.getItem('bankrot_records_v2')) || INITIAL_RECORDS;
+    let expenses = JSON.parse(localStorage.getItem('bankrot_expenses_v2')) || INITIAL_EXPENSES;
+    let questSaved = parseInt(localStorage.getItem('bankrot_quest_saved_v2') || '0', 10);
+
+    function saveData() {
+        localStorage.setItem('bankrot_records_v2', JSON.stringify(records));
+        localStorage.setItem('bankrot_expenses_v2', JSON.stringify(expenses));
+        localStorage.setItem('bankrot_quest_saved_v2', questSaved.toString());
+        render();
+    }
+
+    function render() {
+        // Income total
+        const total = records.reduce((acc, r) => acc + r.sum, 0);
+        document.getElementById('hero-total-sum').innerText = total.toLocaleString('ru-RU');
+
+        const pct = Math.min(100, (total / 150000) * 100);
+        document.getElementById('main-percent-text').innerText = pct.toFixed(1) + '%';
+        document.getElementById('main-progress-bar').style.width = pct + '%';
+
+        const rem120 = Math.max(0, 120000 - total);
+        const rem130 = Math.max(0, 130000 - total);
+        const rem150 = Math.max(0, 150000 - total);
+
+        if (total < 120000) {
+            document.getElementById('next-goal-text').innerText = `До минимума (120к): ${rem120.toLocaleString('ru-RU')} ₽`;
+        } else if (total < 130000) {
+            document.getElementById('next-goal-text').innerText = `До комфорта (130к): ${rem130.toLocaleString('ru-RU')} ₽`;
+        } else {
+            document.getElementById('next-goal-text').innerText = `До финала (150к): ${rem150.toLocaleString('ru-RU')} ₽`;
+        }
+
+        document.getElementById('tier-sub-1').innerText = total >= 120000 ? "Закрыто! ✅" : `Осталось ${rem120.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('tier-sub-2').innerText = total >= 130000 ? "Закрыто! ✅" : `Осталось ${rem130.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('tier-sub-3').innerText = total >= 150000 ? "Закрыто! ✅" : `Осталось ${rem150.toLocaleString('ru-RU')} ₽`;
+
+        // Quest Card
+        const questPct = Math.min(100, (questSaved / 30000) * 100);
+        document.getElementById('quest-collected-text').innerText = `${questSaved.toLocaleString('ru-RU')} / 30к`;
+        document.getElementById('quest-saved-display').innerText = `${questSaved.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('quest-bar-fill').style.width = questPct + '%';
+
+        // Expenses Dynamic Impact Calculation
+        const totalEst = expenses.reduce((acc, e) => acc + e.rubVal, 0);
+        const paidEst = expenses.filter(e => e.paid).reduce((acc, e) => acc + e.rubVal, 0);
+        const remainEst = totalEst - paidEst;
+
+        document.getElementById('exp-total-estimate').innerText = `${totalEst.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('exp-paid-sum').innerText = `${paidEst.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('exp-remain-to-pay').innerText = `${remainEst.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('exp-paid-bar').style.width = `${Math.min(100, (paidEst / totalEst) * 100)}%`;
+
+        // Render Feed
+        document.getElementById('feed-count-text').innerText = `${records.length} записей`;
+        const feedContainer = document.getElementById('feed-container');
+        feedContainer.innerHTML = '';
+        records.forEach(r => {
+            const el = document.createElement('div');
+            el.className = 'feed-item';
+            el.innerHTML = `
+                <div>
+                    <div class="feed-desc">${r.desc}</div>
+                    <div class="feed-date mono">${r.date}</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="feed-sum mono">+${r.sum.toLocaleString('ru-RU')} ₽</span>
+                    <button style="background:none; border:none; color:var(--text-dim); cursor:pointer;" onclick="deleteEntry(${r.id})">✕</button>
+                </div>
+            `;
+            feedContainer.appendChild(el);
+        });
+
+        // Render Expenses Lists
+        const recList = document.getElementById('exp-recurring');
+        const oneList = document.getElementById('exp-onetime');
+        recList.innerHTML = '';
+        oneList.innerHTML = '';
+
+        expenses.forEach(e => {
+            const el = document.createElement('div');
+            el.className = 'exp-item' + (e.paid ? ' paid' : '');
+            el.onclick = () => toggleExpense(e.id);
+            el.innerHTML = `
+                <div style="display:flex; align-items:center;">
+                    <div class="exp-checkbox">${e.paid ? '✓' : ''}</div>
+                    <span class="exp-name">${e.name}</span>
+                </div>
+                <span class="mono" style="font-weight:700;">${e.sumText}</span>
+            `;
+            if (e.cat === 'rec') recList.appendChild(el);
+            else oneList.appendChild(el);
+        });
+    }
+
+    function toggleExpense(id) {
+        expenses = expenses.map(e => e.id === id ? { ...e, paid: !e.paid } : e);
+        saveData();
+    }
+
+    function editQuestSaved() {
+        const val = prompt('Сколько рублей физически лежит в сейфе/на карте на ноябрьские 30к (хата+адвокат)?', questSaved);
+        if (val !== null) {
+            questSaved = parseInt(val, 10) || 0;
+            saveData();
+        }
+    }
+
+    function openAddModal() {
+        document.getElementById('in-sum').value = '';
+        document.getElementById('in-desc').value = '';
+        document.getElementById('in-date').value = '27 окт.';
+        document.getElementById('add-modal').classList.add('active');
+    }
+
+    function closeAddModal() {
+        document.getElementById('add-modal').classList.remove('active');
+    }
+
+    function saveNewEntry() {
+        const sum = parseInt(document.getElementById('in-sum').value, 10);
+        const date = document.getElementById('in-date').value.trim() || 'Сегодня';
+        const desc = document.getElementById('in-desc').value.trim() || 'Смена';
+        if (!sum) return alert('Введи сумму');
+        records.unshift({ id: Date.now(), date, sum, desc });
+        closeAddModal();
+        saveData();
+    }
+
+    function deleteEntry(id) {
+        if (confirm('Удалить запись?')) {
+            records = records.filter(r => r.id !== id);
+            saveData();
+        }
+    }
+
+    function copyPatreonChecklist() {
+        alert("План на сегодня:\n1. Собрать сет из архива (3-5 артов).\n2. Написать пост: возвращение к дропам.\n3. Сделать тизер в X/Reddit.");
+    }
+
+    // Sync helpers
+    function generateSyncCode() {
+        const str = btoa(unescape(encodeURIComponent(JSON.stringify({ records, expenses, questSaved }))));
+        navigator.clipboard.writeText(str).then(() => {
+            alert('Код синхронизации скопирован в буфер! Отправь его себе в Telegram и вставь на другом устройстве через "Вставить код".');
+        });
+    }
+
+    function importSyncCode() {
+        const code = prompt('Вставь сюда код синхронизации:');
+        if (!code) return;
+        try {
+            const data = JSON.parse(decodeURIComponent(escape(atob(code))));
+            if (data.records && data.expenses) {
+                records = data.records;
+                expenses = data.expenses;
+                questSaved = data.questSaved || 0;
+                saveData();
+                alert('Данные успешно синхронизированы!');
+            }
+        } catch(e) {
+            alert('Ошибка: неверный код.');
+        }
+    }
+
+    render();
+</script>
+</body>
+</html>
