@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Финал Банкротства // Свобода в цифрах 2.1</title>
+    <title>Финал Банкротства // Свобода в цифрах 2.2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,7 +25,6 @@
             --accent-green: #10B981;
             --accent-green-glow: rgba(16, 185, 129, 0.25);
             --accent-amber: #F59E0B;
-            --accent-blue: #3B82F6;
             --accent-rose: #F43F5E;
             
             --radius-sm: 8px;
@@ -89,11 +88,6 @@
             box-shadow: 0 0 10px var(--accent-purple);
         }
 
-        .nav-chips {
-            display: flex;
-            gap: 8px;
-        }
-
         .chip {
             padding: 4px 10px;
             background: var(--bg-card);
@@ -102,12 +96,6 @@
             font-size: 11px;
             color: var(--text-muted);
             font-weight: 600;
-        }
-
-        .chip.active-work {
-            background: rgba(16, 185, 129, 0.12);
-            border-color: rgba(16, 185, 129, 0.3);
-            color: var(--accent-green);
         }
 
         /* Hero Progress Card */
@@ -174,7 +162,7 @@
             border: 1px solid var(--border);
         }
 
-        /* Multi-Milestone Bar */
+        /* Progress Bar */
         .bar-container {
             position: relative;
             margin-bottom: 24px;
@@ -214,8 +202,7 @@
 
         .milestone-pin {
             position: absolute;
-            top: 0; bottom: 0;
-            width: 2px;
+            top: 0; bottom: 0; width: 2px;
             background: rgba(255, 255, 255, 0.4);
             transform: translateX(-50%);
         }
@@ -223,8 +210,7 @@
         .milestone-pin::after {
             content: attr(data-label);
             position: absolute;
-            top: 22px;
-            left: 50%;
+            top: 22px; left: 50%;
             transform: translateX(-50%);
             font-size: 10px;
             font-weight: 700;
@@ -233,12 +219,8 @@
             white-space: nowrap;
         }
 
-        .milestone-pin.reached {
-            background: var(--accent-green);
-        }
-        .milestone-pin.reached::after {
-            color: var(--accent-green);
-        }
+        .milestone-pin.reached { background: var(--accent-green); }
+        .milestone-pin.reached::after { color: var(--accent-green); }
 
         /* 3-Tier Grid */
         .tier-grid {
@@ -324,7 +306,7 @@
             gap: 8px;
         }
 
-        /* Tactical Quest */
+        /* Quest Card */
         .quest-box {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -354,7 +336,7 @@
             transition: width 0.3s ease;
         }
 
-        /* Patreon Focus Card */
+        /* Patreon Card */
         .patreon-card {
             background: linear-gradient(135deg, rgba(244, 63, 94, 0.08) 0%, var(--bg-card) 100%);
             border: 1px solid rgba(244, 63, 94, 0.25);
@@ -363,12 +345,6 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-        }
-
-        .patreon-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .patreon-badge {
@@ -380,6 +356,112 @@
             border-radius: 12px;
             text-transform: uppercase;
         }
+
+        /* Expenses Section */
+        .expense-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .exp-impact-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .exp-col-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .exp-item.paid {
+            opacity: 0.4;
+            background: #0E111C;
+            border-color: transparent;
+        }
+
+        .exp-item.paid span.exp-name {
+            text-decoration: line-through;
+        }
+
+        .exp-left {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .exp-checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 1px solid var(--border-focus);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .exp-item.paid .exp-checkbox {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: #000;
+        }
+
+        .exp-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exp-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 13px;
+        }
+        .exp-btn:hover { color: var(--text-main); }
+        .exp-btn.del:hover { color: var(--accent-rose); }
 
         /* Feed List */
         .feed-card {
@@ -425,96 +507,7 @@
             color: var(--accent-green);
         }
 
-        /* Expenses Section & Real-time Impact */
-        .expense-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-        }
-
-        .exp-impact-banner {
-            background: var(--bg-card);
-            border: 1px solid var(--border-focus);
-            border-radius: var(--radius-md);
-            padding: 14px;
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .exp-impact-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .exp-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .exp-col-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-dim);
-            margin-bottom: 10px;
-        }
-
-        .exp-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .exp-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s;
-        }
-
-        .exp-item.paid {
-            opacity: 0.4;
-            background: #0E111C;
-            border-color: transparent;
-        }
-
-        .exp-item.paid span.exp-name {
-            text-decoration: line-through;
-        }
-
-        .exp-checkbox {
-            width: 18px;
-            height: 18px;
-            border-radius: 5px;
-            border: 1px solid var(--border-focus);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 800;
-            margin-right: 10px;
-        }
-
-        .exp-item.paid .exp-checkbox {
-            background: var(--accent-green);
-            border-color: var(--accent-green);
-            color: #000;
-        }
-
-        /* Buttons */
+        /* Buttons & Forms */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -541,7 +534,6 @@
             color: var(--text-muted);
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -593,9 +585,9 @@
             <span class="brand-dot"></span>
             Финал Банкротства // 2026
         </div>
-        <div class="nav-chips">
-            <div class="chip active-work">👷‍♂️ Паша: пешая доступность</div>
+        <div style="display:flex; gap:8px;">
             <div class="chip">🏁 Финиш: <span class="mono">01.12</span></div>
+            <div class="chip mono" id="top-days-left">36 дн</div>
         </div>
     </div>
 
@@ -664,13 +656,13 @@
         <div class="info-card">
             <div>
                 <div class="card-header-line">
-                    <div class="card-title">🎯 Тактический квест: Ноябрь</div>
-                    <span class="chip mono" style="color:var(--accent-amber);">Срок 03-13.11</span>
+                    <div class="card-title">🎯 Тактический квест</div>
+                    <span class="chip mono" id="quest-dates-badge" style="color:var(--accent-amber); cursor:pointer;" onclick="editQuestDetails()">Срок 03-13.11 ✏️</span>
                 </div>
                 
                 <div class="quest-box">
                     <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                        <span style="font-size: 13px; font-weight: 600;">Броня: Хата (20к) + Адвокат (10к)</span>
+                        <span style="font-size: 13px; font-weight: 600;" id="quest-title-display">Броня: Хата (20к) + Адвокат (10к)</span>
                         <span class="quest-target-num mono" id="quest-collected-text">0 / 30к</span>
                     </div>
                     <div class="quest-bar-bg">
@@ -684,11 +676,11 @@
             </div>
 
             <div style="font-size:11px; color:var(--text-dim); line-height:1.4;">
-                * Задача закрыть эти 30к до ДР Димона (03.11) и спокойно работать дальше до заморозков.
+                * 3 ноября — рубеж до ДР Димона. 13–16 ноября — оплата аренды и юриста.
             </div>
         </div>
 
-        <!-- Patreon & 3D Radar -->
+        <!-- Patreon Card -->
         <div class="info-card">
             <div>
                 <div class="card-header-line">
@@ -697,36 +689,36 @@
                 </div>
 
                 <div class="patreon-card">
-                    <div class="patreon-header">
+                    <div class="patreon-header" style="display:flex; justify-content:space-between; align-items:center;">
                         <span class="mono" style="font-size: 26px; font-weight: 800; color: #FFF;">$92.00</span>
                         <span style="font-size: 12px; color: var(--accent-rose); font-weight: 700;">Осталось $8</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-muted);">
-                        ⚠️ <b>0 активных платных сабов</b> (отписка из-за паузы 2 месяца).
+                        ⚠️ <b>0 активных платных сабов</b> (пауза 2 месяца).
                     </div>
                     <div style="font-size: 11px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
-                        План на 26 окт: <b>1 сет из 100+ архива + пост возвращения + 1 пост в X/Reddit</b>.
+                        План: <b>Сет из архива (100+) + пост возвращения + 1 пост в X/Reddit</b>.
                     </div>
                 </div>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
                 <span style="font-size:11px; color:var(--text-dim);">100+ готовых артов в пайплайне</span>
-                <button class="btn btn-outline" style="font-size:11px; padding:6px 10px;" onclick="copyPatreonChecklist()">📋 План на сегодня</button>
+                <button class="btn btn-outline" style="font-size:11px; padding:6px 10px;" onclick="copyPatreonChecklist()">📋 Напоминалка</button>
             </div>
         </div>
     </div>
 
-    <!-- Expenses Checklist with Dynamic Calculation -->
+    <!-- Expenses Checklist (Fully Editable) -->
     <div class="expense-card">
         <div class="card-header-line">
             <div class="card-title">🛡️ Обязательства и расходы (Влияют на баланс)</div>
-            <span style="font-size: 11px; color: var(--text-dim);">Кликай пункт, чтобы отметить оплату</span>
+            <button class="btn btn-outline" style="font-size:11px; padding:6px 12px;" onclick="openAddExpenseModal()">+ Расход</button>
         </div>
 
         <!-- Dynamic Impact Banner -->
         <div class="exp-impact-banner">
-            <div class="exp-impact-stats">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
                 <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);">Закрыто счетов из сметы:</span>
                 <span class="mono" style="font-size: 18px; font-weight: 800; color: var(--accent-green);" id="exp-paid-sum">35 000 ₽</span>
             </div>
@@ -734,7 +726,7 @@
                 <div class="progress-fill" id="exp-paid-bar" style="background: var(--accent-green); width: 40%;"></div>
             </div>
             <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
-                <span>Всего в смете: <b class="mono" id="exp-total-estimate">78 600 ₽</b></span>
+                <span>Всего в плане: <b class="mono" id="exp-total-estimate">78 600 ₽</b></span>
                 <span>Осталось оплатить: <b class="mono" style="color:var(--accent-amber);" id="exp-remain-to-pay">43 600 ₽</b></span>
             </div>
         </div>
@@ -768,7 +760,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal: Add Income -->
 <div class="modal-overlay" id="add-modal">
     <div class="modal-box">
         <h3 style="font-size: 18px; font-weight: 800;">Добавить доход в кассу</h3>
@@ -778,6 +770,33 @@
         <div style="display: flex; justify-content: flex-end; gap: 8px;">
             <button class="btn btn-outline" onclick="closeAddModal()">Отмена</button>
             <button class="btn btn-primary" onclick="saveNewEntry()">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Add/Edit Expense -->
+<div class="modal-overlay" id="exp-modal">
+    <div class="modal-box">
+        <h3 style="font-size: 18px; font-weight: 800;" id="exp-modal-title">Добавить расход в смету</h3>
+        <input type="hidden" id="edit-exp-id">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Название статьи</label>
+            <input type="text" id="exp-in-name" class="form-control" placeholder="Напр. Теплая куртка">
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Сумма в рублях</label>
+            <input type="number" id="exp-in-sum" class="form-control mono" placeholder="5000">
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Категория</label>
+            <select id="exp-in-cat" class="form-control">
+                <option value="rec">Регулярные счета (ежемесячно)</option>
+                <option value="one">Разовые покупки / вещи</option>
+            </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top:8px;">
+            <button class="btn btn-outline" onclick="closeExpModal()">Отмена</button>
+            <button class="btn btn-primary" onclick="saveExpense()">Сохранить</button>
         </div>
     </div>
 </div>
@@ -803,34 +822,39 @@
         { id: 1,  date: "26 сент.", sum: 1000, desc: "Первая шабашка. 2 часа" }
     ];
 
-    // Added numeric rubVal so ticking checkboxes recalculates pending expenses
     const INITIAL_EXPENSES = [
-        { id: "e1", cat: "rec", name: "Аренда (Октябрь)", sumText: "20 000 ₽", rubVal: 20000, paid: true },
-        { id: "e2", cat: "rec", name: "Адвокат (Октябрь)", sumText: "10 000 ₽", rubVal: 10000, paid: true },
-        { id: "e3", cat: "rec", name: "Аренда (Ноябрь, к 13.11)", sumText: "20 000 ₽", rubVal: 20000, paid: false },
-        { id: "e4", cat: "rec", name: "Адвокат (Ноябрь, к 16.11)", sumText: "10 000 ₽", rubVal: 10000, paid: false },
-        { id: "e5", cat: "rec", name: "Интернет (Октябрь/Ноябрь)", sumText: "850 ₽", rubVal: 850, paid: false },
-        { id: "e6", cat: "rec", name: "МТС (резерв связи)", sumText: "600 ₽", rubVal: 600, paid: false },
-        { id: "e7", cat: "rec", name: "iCloud 2 ТБ (5 000 ₸)", sumText: "≈1 100 ₽", rubVal: 1100, paid: false },
-        { id: "e8", cat: "rec", name: "VPN сервер ($3.51)", sumText: "≈350 ₽", rubVal: 350, paid: false },
-        { id: "e9", cat: "rec", name: "Spotify Family ($8)", sumText: "≈800 ₽", rubVal: 800, paid: false },
+        { id: "e1", cat: "rec", name: "Аренда (Октябрь)", rubVal: 20000, paid: true },
+        { id: "e2", cat: "rec", name: "Адвокат (Октябрь)", rubVal: 10000, paid: true },
+        { id: "e3", cat: "rec", name: "Аренда (Ноябрь, к 13.11)", rubVal: 20000, paid: false },
+        { id: "e4", cat: "rec", name: "Адвокат (Ноябрь, к 16.11)", rubVal: 10000, paid: false },
+        { id: "e5", cat: "rec", name: "Интернет (Октябрь/Ноябрь)", rubVal: 850, paid: false },
+        { id: "e6", cat: "rec", name: "МТС (резерв связи)", rubVal: 600, paid: false },
+        { id: "e7", cat: "rec", name: "iCloud 2 ТБ (5 000 ₸)", rubVal: 1100, paid: false },
+        { id: "e8", cat: "rec", name: "VPN сервер ($3.51)", rubVal: 350, paid: false },
+        { id: "e9", cat: "rec", name: "Spotify Family ($8)", rubVal: 800, paid: false },
         
-        { id: "o1", cat: "one", name: "Подарок маме (колонка)", sumText: "3 000 ₽", rubVal: 3000, paid: true },
-        { id: "o2", cat: "one", name: "Бензин (Октябрь)", sumText: "2 000 ₽", rubVal: 2000, paid: true },
-        { id: "o3", cat: "one", name: "Тёплая куртка / ветровка", sumText: "5 000 ₽", rubVal: 5000, paid: false },
-        { id: "o4", cat: "one", name: "Носки и бельё", sumText: "2 000 ₽", rubVal: 2000, paid: false },
-        { id: "o5", cat: "one", name: "Анализы (сахар/мочевая)", sumText: "500 ₽", rubVal: 500, paid: false },
-        { id: "o6", cat: "one", name: "Kaspi Gold (1 995 ₸)", sumText: "≈450 ₽", rubVal: 450, paid: false }
+        { id: "o1", cat: "one", name: "Подарок маме (колонка)", rubVal: 3000, paid: true },
+        { id: "o2", cat: "one", name: "Бензин (Октябрь)", rubVal: 2000, paid: true },
+        { id: "o3", cat: "one", name: "Тёплая куртка / ветровка", rubVal: 5000, paid: false },
+        { id: "o4", cat: "one", name: "Носки и бельё", rubVal: 2000, paid: false },
+        { id: "o5", cat: "one", name: "Анализы (сахар/мочевая)", rubVal: 500, paid: false },
+        { id: "o6", cat: "one", name: "Kaspi Gold (1 995 ₸)", rubVal: 450, paid: false }
     ];
 
-    let records = JSON.parse(localStorage.getItem('bankrot_records_v2')) || INITIAL_RECORDS;
-    let expenses = JSON.parse(localStorage.getItem('bankrot_expenses_v2')) || INITIAL_EXPENSES;
-    let questSaved = parseInt(localStorage.getItem('bankrot_quest_saved_v2') || '0', 10);
+    let records = JSON.parse(localStorage.getItem('bankrot_records_v3')) || INITIAL_RECORDS;
+    let expenses = JSON.parse(localStorage.getItem('bankrot_expenses_v3')) || INITIAL_EXPENSES;
+    let questSaved = parseInt(localStorage.getItem('bankrot_quest_saved_v3') || '0', 10);
+    let questTarget = parseInt(localStorage.getItem('bankrot_quest_target_v3') || '30000', 10);
+    let questTitle = localStorage.getItem('bankrot_quest_title_v3') || 'Броня: Хата (20к) + Адвокат (10к)';
+    let questDates = localStorage.getItem('bankrot_quest_dates_v3') || 'Срок 03-13.11';
 
     function saveData() {
-        localStorage.setItem('bankrot_records_v2', JSON.stringify(records));
-        localStorage.setItem('bankrot_expenses_v2', JSON.stringify(expenses));
-        localStorage.setItem('bankrot_quest_saved_v2', questSaved.toString());
+        localStorage.setItem('bankrot_records_v3', JSON.stringify(records));
+        localStorage.setItem('bankrot_expenses_v3', JSON.stringify(expenses));
+        localStorage.setItem('bankrot_quest_saved_v3', questSaved.toString());
+        localStorage.setItem('bankrot_quest_target_v3', questTarget.toString());
+        localStorage.setItem('bankrot_quest_title_v3', questTitle);
+        localStorage.setItem('bankrot_quest_dates_v3', questDates);
         render();
     }
 
@@ -860,10 +884,12 @@
         document.getElementById('tier-sub-3').innerText = total >= 150000 ? "Закрыто! ✅" : `Осталось ${rem150.toLocaleString('ru-RU')} ₽`;
 
         // Quest Card
-        const questPct = Math.min(100, (questSaved / 30000) * 100);
-        document.getElementById('quest-collected-text').innerText = `${questSaved.toLocaleString('ru-RU')} / 30к`;
+        const questPct = Math.min(100, (questSaved / questTarget) * 100);
+        document.getElementById('quest-collected-text').innerText = `${questSaved.toLocaleString('ru-RU')} / ${(questTarget/1000).toFixed(0)}к`;
         document.getElementById('quest-saved-display').innerText = `${questSaved.toLocaleString('ru-RU')} ₽`;
         document.getElementById('quest-bar-fill').style.width = questPct + '%';
+        document.getElementById('quest-title-display').innerText = questTitle;
+        document.getElementById('quest-dates-badge').innerText = questDates + ' ✏️';
 
         // Expenses Dynamic Impact Calculation
         const totalEst = expenses.reduce((acc, e) => acc + e.rubVal, 0);
@@ -873,7 +899,7 @@
         document.getElementById('exp-total-estimate').innerText = `${totalEst.toLocaleString('ru-RU')} ₽`;
         document.getElementById('exp-paid-sum').innerText = `${paidEst.toLocaleString('ru-RU')} ₽`;
         document.getElementById('exp-remain-to-pay').innerText = `${remainEst.toLocaleString('ru-RU')} ₽`;
-        document.getElementById('exp-paid-bar').style.width = `${Math.min(100, (paidEst / totalEst) * 100)}%`;
+        document.getElementById('exp-paid-bar').style.width = `${totalEst > 0 ? Math.min(100, (paidEst / totalEst) * 100) : 0}%`;
 
         // Render Feed
         document.getElementById('feed-count-text').innerText = `${records.length} записей`;
@@ -889,7 +915,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:10px;">
                     <span class="feed-sum mono">+${r.sum.toLocaleString('ru-RU')} ₽</span>
-                    <button style="background:none; border:none; color:var(--text-dim); cursor:pointer;" onclick="deleteEntry(${r.id})">✕</button>
+                    <button class="exp-btn del" onclick="deleteEntry(${r.id})">✕</button>
                 </div>
             `;
             feedContainer.appendChild(el);
@@ -904,32 +930,109 @@
         expenses.forEach(e => {
             const el = document.createElement('div');
             el.className = 'exp-item' + (e.paid ? ' paid' : '');
-            el.onclick = () => toggleExpense(e.id);
             el.innerHTML = `
-                <div style="display:flex; align-items:center;">
+                <div class="exp-left" onclick="toggleExpense('${e.id}')">
                     <div class="exp-checkbox">${e.paid ? '✓' : ''}</div>
                     <span class="exp-name">${e.name}</span>
                 </div>
-                <span class="mono" style="font-weight:700;">${e.sumText}</span>
+                <div class="exp-actions">
+                    <span class="mono" style="font-weight:700;">${e.rubVal.toLocaleString('ru-RU')} ₽</span>
+                    <button class="exp-btn" onclick="openEditExpenseModal('${e.id}')" title="Изменить">✏️</button>
+                    <button class="exp-btn del" onclick="deleteExpense('${e.id}')" title="Удалить">✕</button>
+                </div>
             `;
             if (e.cat === 'rec') recList.appendChild(el);
             else oneList.appendChild(el);
         });
     }
 
+    // Expense Logic
     function toggleExpense(id) {
         expenses = expenses.map(e => e.id === id ? { ...e, paid: !e.paid } : e);
         saveData();
     }
 
+    function openAddExpenseModal() {
+        document.getElementById('edit-exp-id').value = '';
+        document.getElementById('exp-in-name').value = '';
+        document.getElementById('exp-in-sum').value = '';
+        document.getElementById('exp-in-cat').value = 'rec';
+        document.getElementById('exp-modal-title').innerText = 'Добавить расход в смету';
+        document.getElementById('exp-modal').classList.add('active');
+    }
+
+    function openEditExpenseModal(id) {
+        const item = expenses.find(e => e.id === id);
+        if (!item) return;
+        document.getElementById('edit-exp-id').value = item.id;
+        document.getElementById('exp-in-name').value = item.name;
+        document.getElementById('exp-in-sum').value = item.rubVal;
+        document.getElementById('exp-in-cat').value = item.cat;
+        document.getElementById('exp-modal-title').innerText = 'Изменить статью расхода';
+        document.getElementById('exp-modal').classList.add('active');
+    }
+
+    function closeExpModal() {
+        document.getElementById('exp-modal').classList.remove('active');
+    }
+
+    function saveExpense() {
+        const id = document.getElementById('edit-exp-id').value;
+        const name = document.getElementById('exp-in-name').value.trim();
+        const sum = parseInt(document.getElementById('exp-in-sum').value, 10);
+        const cat = document.getElementById('exp-in-cat').value;
+
+        if (!name || isNaN(sum) || sum <= 0) {
+            return alert('Укажи адекватное название и сумму в рублях.');
+        }
+
+        if (id) {
+            // Edit
+            expenses = expenses.map(e => e.id === id ? { ...e, name, rubVal: sum, cat } : e);
+        } else {
+            // Add
+            expenses.push({
+                id: 'exp_' + Date.now(),
+                name,
+                rubVal: sum,
+                cat,
+                paid: false
+            });
+        }
+        closeExpModal();
+        saveData();
+    }
+
+    function deleteExpense(id) {
+        if (confirm('Удалить эту статью расхода из сметы?')) {
+            expenses = expenses.filter(e => e.id !== id);
+            saveData();
+        }
+    }
+
+    // Quest Edits
     function editQuestSaved() {
-        const val = prompt('Сколько рублей физически лежит в сейфе/на карте на ноябрьские 30к (хата+адвокат)?', questSaved);
+        const val = prompt('Сколько рублей физически отложено в сейф на ноябрь?', questSaved);
         if (val !== null) {
             questSaved = parseInt(val, 10) || 0;
             saveData();
         }
     }
 
+    function editQuestDetails() {
+        const newDates = prompt('Укажи новый ориентир срока (напр. Срок 03-13.11):', questDates);
+        if (newDates !== null && newDates.trim()) questDates = newDates.trim();
+        
+        const newTitle = prompt('Название квеста:', questTitle);
+        if (newTitle !== null && newTitle.trim()) questTitle = newTitle.trim();
+
+        const newTarget = prompt('Целевая сумма в рублях (сейчас ' + questTarget + '):', questTarget);
+        if (newTarget !== null && parseInt(newTarget, 10) > 0) questTarget = parseInt(newTarget, 10);
+
+        saveData();
+    }
+
+    // Income Logic
     function openAddModal() {
         document.getElementById('in-sum').value = '';
         document.getElementById('in-desc').value = '';
@@ -945,28 +1048,28 @@
         const sum = parseInt(document.getElementById('in-sum').value, 10);
         const date = document.getElementById('in-date').value.trim() || 'Сегодня';
         const desc = document.getElementById('in-desc').value.trim() || 'Смена';
-        if (!sum) return alert('Введи сумму');
+        if (!sum || sum <= 0) return alert('Введи сумму');
         records.unshift({ id: Date.now(), date, sum, desc });
         closeAddModal();
         saveData();
     }
 
     function deleteEntry(id) {
-        if (confirm('Удалить запись?')) {
+        if (confirm('Удалить эту запись из журнала выходов?')) {
             records = records.filter(r => r.id !== id);
             saveData();
         }
     }
 
     function copyPatreonChecklist() {
-        alert("План на сегодня:\n1. Собрать сет из архива (3-5 артов).\n2. Написать пост: возвращение к дропам.\n3. Сделать тизер в X/Reddit.");
+        alert("План на сегодня:\n1. Выбрать сет из 100+ готовых артов.\n2. Выложить пост-возвращение.\n3. Закинуть 1 арт в X и Reddit.");
     }
 
     // Sync helpers
     function generateSyncCode() {
-        const str = btoa(unescape(encodeURIComponent(JSON.stringify({ records, expenses, questSaved }))));
+        const str = btoa(unescape(encodeURIComponent(JSON.stringify({ records, expenses, questSaved, questTarget, questTitle, questDates }))));
         navigator.clipboard.writeText(str).then(() => {
-            alert('Код синхронизации скопирован в буфер! Отправь его себе в Telegram и вставь на другом устройстве через "Вставить код".');
+            alert('Код синхронизации скопирован! Отправь его себе в Telegram и вставь на другом устройстве.');
         });
     }
 
@@ -979,8 +1082,11 @@
                 records = data.records;
                 expenses = data.expenses;
                 questSaved = data.questSaved || 0;
+                questTarget = data.questTarget || 30000;
+                questTitle = data.questTitle || 'Броня: Хата (20к) + Адвокат (10к)';
+                questDates = data.questDates || 'Срок 03-13.11';
                 saveData();
-                alert('Данные успешно синхронизированы!');
+                alert('Данные успешно загружены!');
             }
         } catch(e) {
             alert('Ошибка: неверный код.');
